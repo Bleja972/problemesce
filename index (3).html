@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Petits Défis CE1 - Problèmes en barres</title>
+<style>
+:root{
+  --navy:#17324d;
+  --green:#2f8f57;
+  --red:#c94c4c;
+  --purple:#6c63d9;
+  --orange:#efb46d;
+  --cream:#fffaf4;
+  --blue:#8fd3ff;
+  --pink:#f7b9cb;
+  --mint:#a8e4b1;
+  --yellow:#ffe18a;
+  --lav:#c9bbff;
+  --whole:#f4a6a6;
+  --border:#ead1ad;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#fff8ef,#f8dfbd);
+  color:#222;
+}
+.app{max-width:1020px;margin:0 auto;padding:18px}
+.shell{
+  background:#fff;
+  border:3px solid #efdbc0;
+  box-shadow:0 10px 28px rgba(0,0,0,.10);
+  overflow:hidden;
+}
+header{
+  text-align:center;
+  padding:18px;
+  background:linear-gradient(135deg,#ffe7bd,#ffd49b 55%,#fff0d3);
+  border-bottom:3px solid #efd4ad;
+}
+.brand{
+  color:var(--navy);
+  font-weight:900;
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+h1{
+  margin:8px 0 4px;
+  font-size:clamp(29px,4vw,44px);
+}
+.subtitle{
+  margin:0;
+  color:#5b5b5b;
+  font-size:18px;
+}
+main{padding:20px}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:15px;
+}
+.stat{
+  background:#fff8ef;
+  border:2px solid var(--border);
+  padding:10px;
+  text-align:center;
+  color:var(--navy);
+  font-weight:900;
+}
+.stat strong{
+  display:block;
+  font-size:28px;
+  margin-top:4px;
+}
+.progress{
+  height:14px;
+  background:#f1e4d2;
+  border:1px solid #dfc7a5;
+  margin-bottom:18px;
+  overflow:hidden;
+}
+.progress div{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--navy),#52799c);
+  transition:width .25s;
+}
+.card{
+  background:linear-gradient(180deg,#fffdf9,#fff5e8);
+  border:2px solid #ecd4b3;
+  padding:20px;
+}
+.tag{
+  display:inline-block;
+  background:#ffe4ae;
+  border:2px solid #efc46e;
+  color:var(--navy);
+  padding:7px 14px;
+  font-weight:900;
+  margin-bottom:14px;
+}
+.problem{
+  background:white;
+  border:2px solid #eed8bb;
+  border-left:8px solid var(--orange);
+  padding:16px;
+  font-size:clamp(21px,3vw,28px);
+  line-height:1.45;
+  font-weight:800;
+  color:var(--navy);
+}
+.question{
+  margin-top:10px;
+  font-weight:900;
+  color:#111;
+}
+.model-title{
+  margin:18px 0 10px;
+  font-size:22px;
+  font-weight:900;
+  color:var(--navy);
+  text-align:center;
+}
+.model{
+  background:#fffaf2;
+  border:2px dashed #e6c89b;
+  padding:14px;
+  margin-bottom:16px;
+}
+.model-subtitle{
+  text-align:center;
+  font-weight:900;
+  color:var(--navy);
+  margin-bottom:8px;
+}
+.comparison-row{
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:10px;
+  align-items:center;
+  margin-bottom:14px;
+  width:100%;
+}
+.comparison-row + .comparison-row{
+  margin-top:6px;
+}
+.child-name{
+  font-size:22px;
+  font-weight:900;
+  color:var(--navy);
+  text-align:right;
+  padding-right:4px;
+}
+.comparison-row .model{
+  margin-bottom:0;
+}
+@media(max-width:700px){
+  .comparison-row{
+    grid-template-columns:80px 1fr;
+  }
+  .child-name{
+    font-size:18px;
+  }
+}
+.whole{
+  min-height:54px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--whole);
+  border:3px solid #ffffff;
+  font-size:23px;
+  font-weight:900;
+  color:#512020;
+  margin-bottom:8px;
+}
+.parts{
+  display:flex;
+  width:100%;
+}
+.part{
+  min-height:62px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px;
+  text-align:center;
+  font-size:21px;
+  font-weight:900;
+  color:var(--navy);
+  border:3px solid #ffffff;
+}
+.p1{background:var(--blue);border-color:#ffffff}
+.p2{background:var(--mint);border-color:#ffffff}
+.p3{background:var(--yellow);border-color:#ffffff}
+.legend{
+  text-align:center;
+  color:#666;
+  font-size:15px;
+  margin-top:6px;
+  font-weight:700;
+}
+.answer-area{
+  margin-top:18px;
+  text-align:center;
+}
+.subquestions{
+  max-width:720px;
+  margin:0 auto 18px;
+  display:grid;
+  gap:12px;
+}
+.subquestion{
+  background:#fff;
+  border:2px solid #d8c5a8;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  text-align:left;
+  font-size:19px;
+  font-weight:900;
+  color:var(--navy);
+}
+.subquestion input{
+  width:110px;
+  height:50px;
+  border:3px solid #7db9dc;
+  background:#ffffff;
+  color:var(--navy);
+  font-size:26px;
+  font-weight:900;
+  text-align:center;
+  outline:none;
+}
+.subquestion input.good{
+  border-color:var(--green);
+  background:#ffffff;
+}
+.subquestion input.bad{
+  border-color:var(--red);
+  background:#ffffff;
+}
+.answer-area label{
+  display:block;
+  font-size:21px;
+  font-weight:900;
+  color:var(--navy);
+  margin-bottom:9px;
+}
+.answer-input{
+  width:180px;
+  height:58px;
+  border:3px solid var(--navy);
+  background:#ffffff;
+  color:var(--navy);
+  font-size:30px;
+  font-weight:900;
+  text-align:center;
+  outline:none;
+}
+.choices{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  max-width:600px;
+  margin:0 auto;
+}
+.choice{
+  min-height:66px;
+  border:3px solid #d79a55;
+  background:#fffaf3;
+  color:var(--navy);
+  font-size:24px;
+  font-weight:900;
+  cursor:pointer;
+}
+.choice.correct{
+  background:#e6f5ec;
+  border-color:var(--green);
+  color:#1e6c40;
+}
+.choice.wrong{
+  background:#fdeaea;
+  border-color:var(--red);
+  color:#9a2d2d;
+}
+.choice:disabled{cursor:default}
+.feedback{
+  min-height:38px;
+  margin:18px 0 8px;
+  text-align:center;
+  font-size:23px;
+  font-weight:900;
+}
+.actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+.action{
+  border:none;
+  color:white;
+  padding:14px 24px;
+  font-size:20px;
+  font-weight:900;
+  cursor:pointer;
+}
+.check{background:var(--green)}
+.next{background:var(--purple);display:none}
+.replay{background:var(--navy)}
+.end{
+  display:none;
+  text-align:center;
+  padding:30px 12px 14px;
+}
+.end h2{
+  font-size:42px;
+  color:var(--navy);
+  margin:0 0 10px;
+}
+.end p{
+  font-size:24px;
+  font-weight:900;
+}
+@media(max-width:700px){
+  .stats{grid-template-columns:1fr}
+  .choices{grid-template-columns:1fr}
+  .part{font-size:18px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="shell">
+<header>
+  <div class="brand">Les Petits Défis CE1</div>
+  <h1>Problèmes avec modèles en barres</h1>
+  <p class="subtitle">Je lis, je représente et je calcule.</p>
+</header>
+
+<main>
+<section id="game">
+  <div class="stats">
+    <div class="stat">Question<strong id="qnum">1 / 4</strong></div>
+    <div class="stat">Score<strong id="score">0</strong></div>
+    <div class="stat">Réussites<strong id="good">0</strong></div>
+  </div>
+
+  <div class="progress"><div id="bar"></div></div>
+
+  <div class="card">
+    <div class="tag" id="tag">Problème 4</div>
+    <div class="problem" id="problem"></div>
+
+    <div class="model-title">Modèle en barres</div>
+    <div id="models"></div>
+
+    <div class="answer-area" id="answerArea"></div>
+
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+
+    <div class="actions">
+      <button class="action check" id="checkBtn" type="button">Vérifier</button>
+      <button class="action next" id="nextBtn" type="button">Question suivante</button>
+    </div>
+  </div>
+</section>
+
+<section class="end" id="end">
+  <h2>Bravo !</h2>
+  <p id="finalText"></p>
+  <button class="action replay" id="replayBtn" type="button">Rejouer</button>
+</section>
+</main>
+</div>
+</div>
+
+<script>
+const problems = [
+  {
+    tag:"Problème 4",
+    text:"Dans une classe, il y a <strong>12 filles</strong> et <strong>9 garçons</strong>.<div class='question'>Quel est le nombre d’élèves de la classe ?</div>",
+    type:"number",
+    answer:21,
+    models:[
+      {whole:"Le Tout", parts:["12 filles","9 garçons"], weights:[12,9]}
+    ]
+  },
+  {
+    tag:"Problème 5",
+    text:"Le marchand de glace a vendu <strong>12 glaces à la vanille</strong> et <strong>14 glaces au chocolat</strong>.<div class='question'>Combien de glaces le marchand a-t-il vendues ?</div>",
+    type:"number",
+    answer:26,
+    models:[
+      {whole:"Le Tout", parts:["12 vanille","14 chocolat"], weights:[12,14]}
+    ]
+  },
+  {
+    tag:"Problème 6",
+    text:"Dans la classe d’Iris, il y a <strong>11 filles</strong> et <strong>7 garçons</strong>. <strong>3 nouveaux élèves</strong> sont arrivés aujourd’hui.<div class='question'>Combien d’élèves y a-t-il dans la classe maintenant ?</div>",
+    type:"number",
+    answer:21,
+    models:[
+      {title:"Avant l’arrivée des nouveaux élèves", whole:"Le Tout", parts:["11 filles","7 garçons"], weights:[11,7]},
+      {title:"Maintenant", whole:"Le Tout", parts:["Élèves déjà présents","3 nouveaux"], weights:[18,3]}
+    ]
+  },
+  {
+    tag:"Problème 7",
+    text:"Sacha a <strong>8 images de chats</strong> et <strong>7 images de chiens</strong>. Zoé a <strong>10 images de bateaux</strong> et <strong>3 images de dinosaures</strong>.<div class='question'>Qui a le plus d’images ?</div>",
+    type:"comparison",
+    answer:"Sacha",
+    choices:["Sacha","Zoé"],
+    subanswers:{sacha:15,zoeBoats:13},
+    comparisonModels:[
+      {name:"Sacha", whole:"Le Tout", parts:["8 chats","7 chiens"], weights:[8,7]},
+      {name:"Zoé", whole:"Le Tout", parts:["10 bateaux","3 dinosaures"], weights:[10,3]}
+    ]
+  }
+];
+
+let current=0, score=0, good=0, locked=false;
+
+const qnum=document.getElementById("qnum");
+const scoreEl=document.getElementById("score");
+const goodEl=document.getElementById("good");
+const bar=document.getElementById("bar");
+const tag=document.getElementById("tag");
+const problem=document.getElementById("problem");
+const models=document.getElementById("models");
+const answerArea=document.getElementById("answerArea");
+const feedback=document.getElementById("feedback");
+const checkBtn=document.getElementById("checkBtn");
+const nextBtn=document.getElementById("nextBtn");
+const game=document.getElementById("game");
+const end=document.getElementById("end");
+const finalText=document.getElementById("finalText");
+const replayBtn=document.getElementById("replayBtn");
+
+function makeModel(m){
+  const box=document.createElement("div");
+  box.className="model";
+
+  if(m.title){
+    const t=document.createElement("div");
+    t.className="model-subtitle";
+    t.textContent=m.title;
+    box.appendChild(t);
+  }
+
+  const whole=document.createElement("div");
+  whole.className="whole";
+  whole.textContent=m.whole;
+  box.appendChild(whole);
+
+  const parts=document.createElement("div");
+  parts.className="parts";
+
+  m.parts.forEach((label,i)=>{
+    const p=document.createElement("div");
+    p.className="part p"+((i%3)+1);
+    p.textContent=label;
+    p.style.flex=String(m.weights[i]);
+    parts.appendChild(p);
+  });
+
+  box.appendChild(parts);
+
+  const legend=document.createElement("div");
+  legend.className="legend";
+  legend.textContent="Partie + Partie = Le Tout";
+  box.appendChild(legend);
+
+  return box;
+}
+
+function render(){
+  locked=false;
+  const p=problems[current];
+
+  qnum.textContent=`${current+1} / ${problems.length}`;
+  scoreEl.textContent=score;
+  goodEl.textContent=good;
+  bar.style.width=`${current/problems.length*100}%`;
+  tag.textContent=p.tag;
+  problem.innerHTML=p.text;
+  feedback.textContent="";
+  nextBtn.style.display="none";
+  checkBtn.style.display="inline-block";
+  checkBtn.disabled=false;
+
+  models.innerHTML="";
+  if(p.comparisonModels){
+    const stack=document.createElement("div");
+    stack.style.display="flex";
+    stack.style.flexDirection="column";
+    stack.style.width="100%";
+
+    p.comparisonModels.forEach(m=>{
+      const row=document.createElement("div");
+      row.className="comparison-row";
+
+      const name=document.createElement("div");
+      name.className="child-name";
+      name.textContent=m.name;
+
+      const model=makeModel({
+        whole:m.whole,
+        parts:m.parts,
+        weights:m.weights
+      });
+
+      row.appendChild(name);
+      row.appendChild(model);
+      stack.appendChild(row);
+    });
+
+    models.appendChild(stack);
+  }else{
+    p.models.forEach(m=>models.appendChild(makeModel(m)));
+  }
+
+  answerArea.innerHTML="";
+
+  if(p.type==="number"){
+    const label=document.createElement("label");
+    label.textContent="Écris ta réponse :";
+    const input=document.createElement("input");
+    input.id="answerInput";
+    input.className="answer-input";
+    input.type="text";
+    input.inputMode="numeric";
+    input.autocomplete="off";
+    input.addEventListener("input",()=>input.value=input.value.replace(/[^0-9]/g,""));
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter"){
+        if(!locked) validate();
+        else nextQuestion();
+      }
+    });
+    answerArea.appendChild(label);
+    answerArea.appendChild(input);
+    setTimeout(()=>input.focus(),50);
+  }else if(p.type==="comparison"){
+    const subs=document.createElement("div");
+    subs.className="subquestions";
+
+    const q1=document.createElement("div");
+    q1.className="subquestion";
+    q1.innerHTML='<span>1. Combien Sacha a-t-il d’images d’animaux ?</span><input id="sachaInput" inputmode="numeric" autocomplete="off">';
+    subs.appendChild(q1);
+
+    const q2=document.createElement("div");
+    q2.className="subquestion";
+    q2.innerHTML='<span>2. Combien Zoé a-t-elle d’images en tout ?</span><input id="zoeBoatsInput" inputmode="numeric" autocomplete="off">';
+    subs.appendChild(q2);
+
+    answerArea.appendChild(subs);
+
+    const label=document.createElement("label");
+    label.textContent="3. Qui a le plus d’images en tout ?";
+    answerArea.appendChild(label);
+
+    const choices=document.createElement("div");
+    choices.className="choices";
+
+    p.choices.forEach(c=>{
+      const b=document.createElement("button");
+      b.type="button";
+      b.className="choice";
+      b.textContent=c;
+      b.dataset.choice=c;
+      b.addEventListener("click",()=>{
+        if(locked)return;
+        choices.querySelectorAll(".choice").forEach(x=>x.classList.remove("correct","wrong"));
+        choices.querySelectorAll(".choice").forEach(x=>x.dataset.selected="false");
+        b.dataset.selected="true";
+        b.style.outline="4px solid var(--navy)";
+      });
+      choices.appendChild(b);
+    });
+
+    answerArea.appendChild(choices);
+
+    [q1.querySelector("input"),q2.querySelector("input")].forEach(inp=>{
+      inp.addEventListener("input",()=>inp.value=inp.value.replace(/[^0-9]/g,""));
+    });
+    setTimeout(()=>q1.querySelector("input").focus(),50);
+  }else{
+    checkBtn.style.display="none";
+    const label=document.createElement("label");
+    label.textContent="Choisis ta réponse :";
+    answerArea.appendChild(label);
+
+    const choices=document.createElement("div");
+    choices.className="choices";
+
+    p.choices.forEach(c=>{
+      const b=document.createElement("button");
+      b.type="button";
+      b.className="choice";
+      b.textContent=c;
+      b.addEventListener("click",()=>choose(c,b));
+      choices.appendChild(b);
+    });
+
+    answerArea.appendChild(choices);
+  }
+}
+
+function validate(){
+  if(locked)return;
+  const p=problems[current];
+
+  if(p.type==="comparison"){
+    const sachaInput=document.getElementById("sachaInput");
+    const zoeInput=document.getElementById("zoeBoatsInput");
+    const selectedBtn=[...answerArea.querySelectorAll(".choice")].find(b=>b.dataset.selected==="true");
+
+    if(!sachaInput.value.trim() || !zoeInput.value.trim() || !selectedBtn){
+      feedback.style.color="var(--red)";
+      feedback.textContent="Réponds aux deux questions puis choisis Sacha ou Zoé.";
+      return;
+    }
+
+    locked=true;
+    checkBtn.disabled=true;
+    sachaInput.disabled=true;
+    zoeInput.disabled=true;
+    const buttons=[...answerArea.querySelectorAll(".choice")];
+    buttons.forEach(b=>b.disabled=true);
+
+    const ok1=Number(sachaInput.value)===p.subanswers.sacha;
+    const ok2=Number(zoeInput.value)===p.subanswers.zoeBoats;
+    const ok3=selectedBtn.textContent===p.answer;
+
+    sachaInput.classList.add(ok1?"good":"bad");
+    zoeInput.classList.add(ok2?"good":"bad");
+
+    selectedBtn.style.outline="";
+    if(ok3){
+      selectedBtn.classList.add("correct");
+    }else{
+      selectedBtn.classList.add("wrong");
+      const goodBtn=buttons.find(b=>b.textContent===p.answer);
+      if(goodBtn)goodBtn.classList.add("correct");
+    }
+
+    if(ok1 && ok2 && ok3){
+      score++;good++;
+      feedback.style.color="var(--green)";
+      feedback.textContent="Bravo ! Sacha a 15 images d’animaux. Zoé a 13 images en tout. Sacha a 15 images en tout et Zoé 13.";
+    }else{
+      feedback.style.color="var(--red)";
+      feedback.textContent="Correction : Sacha a 15 images d’animaux, Zoé a 13 images en tout, et Sacha a le plus d’images en tout.";
+    }
+
+    afterAnswer();
+    return;
+  }
+
+  const input=document.getElementById("answerInput");
+  if(!input || input.value.trim()===""){
+    feedback.style.color="var(--red)";
+    feedback.textContent="Écris une réponse.";
+    return;
+  }
+
+  locked=true;
+  input.disabled=true;
+  checkBtn.disabled=true;
+
+  const val=Number(input.value);
+  if(val===p.answer){
+    score++;good++;
+    input.style.borderColor="var(--green)";
+    input.style.background="#ffffff";
+    feedback.style.color="var(--green)";
+    feedback.textContent="Bravo ! Bonne réponse.";
+  }else{
+    input.style.borderColor="var(--red)";
+    input.style.background="#ffffff";
+    feedback.style.color="var(--red)";
+    feedback.textContent=`La bonne réponse est ${p.answer}.`;
+  }
+
+  afterAnswer();
+}
+
+function choose(value,btn){
+  if(locked)return;
+  locked=true;
+  const p=problems[current];
+  const buttons=[...answerArea.querySelectorAll(".choice")];
+  buttons.forEach(b=>b.disabled=true);
+
+  if(value===p.answer){
+    score++;good++;
+    btn.classList.add("correct");
+    feedback.style.color="var(--green)";
+    feedback.textContent="Bravo ! Sacha a 15 images et Zoé en a 13.";
+  }else{
+    btn.classList.add("wrong");
+    const correct=buttons.find(b=>b.textContent===p.answer);
+    if(correct)correct.classList.add("correct");
+    feedback.style.color="var(--red)";
+    feedback.textContent="Sacha a 15 images et Zoé en a 13. Sacha en a donc le plus.";
+  }
+
+  afterAnswer();
+}
+
+function afterAnswer(){
+  scoreEl.textContent=score;
+  goodEl.textContent=good;
+  bar.style.width=`${(current+1)/problems.length*100}%`;
+  nextBtn.style.display="inline-block";
+}
+
+function nextQuestion(){
+  current++;
+  if(current>=problems.length){
+    game.style.display="none";
+    end.style.display="block";
+    let t=`Tu as obtenu ${score} bonne${score>1?"s":""} réponse${score>1?"s":""} sur ${problems.length}.`;
+    if(score===4)t+=" C’est un sans-faute !";
+    else if(score>=3)t+=" Très bon travail !";
+    else t+=" Continue à t’entraîner.";
+    finalText.textContent=t;
+    return;
+  }
+  render();
+}
+
+function replay(){
+  current=0;score=0;good=0;
+  game.style.display="block";
+  end.style.display="none";
+  render();
+}
+
+checkBtn.addEventListener("click",validate);
+nextBtn.addEventListener("click",nextQuestion);
+replayBtn.addEventListener("click",replay);
+
+render();
+</script>
+</body>
+</html>
